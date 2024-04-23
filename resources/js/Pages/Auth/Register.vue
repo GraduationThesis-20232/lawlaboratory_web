@@ -4,7 +4,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import {Head, Link, useForm, usePage} from '@inertiajs/vue3';
 
 const form = useForm({
     name: '',
@@ -12,6 +12,14 @@ const form = useForm({
     password: '',
     password_confirmation: '',
 });
+
+const gmail_oauth = usePage().props.gmail;
+const username = usePage().props.username;
+
+if (gmail_oauth && username) {
+    form.email = gmail_oauth;
+    form.name = username;
+}
 
 const submit = () => {
     form.post(route('register'), {
