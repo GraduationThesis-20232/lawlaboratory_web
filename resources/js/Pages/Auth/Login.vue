@@ -5,7 +5,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import {Head, Link, router, useForm} from '@inertiajs/vue3';
 
 defineProps({
     canResetPassword: {
@@ -88,6 +88,14 @@ const submit = () => {
                 <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
                 </PrimaryButton>
+            </div>
+
+            <div class="flex items-center justify-end mt-4">
+                <a
+                      :href="route('google-oauth.redirect')"
+                >
+                    <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" />
+                </a>
             </div>
         </form>
     </GuestLayout>
