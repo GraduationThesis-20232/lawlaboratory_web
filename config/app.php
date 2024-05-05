@@ -185,4 +185,10 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'law_effect_status' => [
+        '-1' => 'Chưa có hiệu lực',
+        '0' => 'Hết hiệu lực toàn bộ',
+        '1' => 'Còn hiệu lực',
+        '2' => 'Hết hiệu lực một phần',
+    ],
 ];
