@@ -1,6 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import {Head, router} from '@inertiajs/vue3';
+import {ref} from "vue";
+
+const activeKey = ref('1');
 </script>
 
 <template>
@@ -13,9 +16,14 @@ import { Head } from '@inertiajs/vue3';
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
-                </div>
+                <a-tabs v-model:activeKey="activeKey" size="large">
+                    <a-tab-pane key="1" tab="Thống kê văn bản Luật">
+                        <a-button @click="router.get(route('crawl.laws'))" type="primary"> Thu thập văn bản luật mới </a-button>
+                    </a-tab-pane>
+                    <a-tab-pane key="2" tab="Thống kê câu hỏi Luật">
+                        <a-button @click="router.get(route('crawl.questions'))" type="primary"> Thu thập câu hỏi luật mới </a-button>
+                    </a-tab-pane>
+                </a-tabs>
             </div>
         </div>
     </AuthenticatedLayout>

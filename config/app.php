@@ -191,4 +191,9 @@ return [
         '1' => 'Còn hiệu lực',
         '2' => 'Hết hiệu lực một phần',
     ],
+
+    'role' => [
+        '1' =>  'ADMIN',
+        '2' =>  'USER',
+    ],
 ];
