@@ -28,7 +28,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'admin'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -40,7 +40,7 @@ Route::prefix('/laws')->group(function () {
    Route::controller(LawController::class)->group(function () {
       Route::get('/', 'index')->name('laws.index');
       Route::get('/{identifier}', 'show')->name('laws.show');
-      Route::put('/{identifier}', 'update')->name('laws.update');
+      Route::put('/{identifier}', 'update')->middleware('admin')->name('laws.update');
    });
 });
 
