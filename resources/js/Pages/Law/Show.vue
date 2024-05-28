@@ -176,7 +176,7 @@ const wrapperCol = {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ law.name }}</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight m-0">{{ law.name }}</h2>
         </template>
 
         <div class="py-12">
