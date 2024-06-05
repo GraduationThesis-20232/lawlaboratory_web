@@ -44,9 +44,5 @@ Route::prefix('/laws')->group(function () {
    });
 });
 
-//Route::get('chatbot', function () {
-//   $response = \Illuminate\Support\Facades\Http::get('http://localhost:8501/chart');
-//   dd($response->body());
-//});
 
 require __DIR__.'/auth.php';

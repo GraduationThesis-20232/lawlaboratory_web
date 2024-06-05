@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import {Head, Link, router} from '@inertiajs/vue3';
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import NavBar from "@/Components/NavBar.vue";
 
@@ -33,7 +33,7 @@ defineProps({
             <p class="py-4 lg:text-lg text-sm">
                 Nền tảng tư vấn và tham khảo thông tin về Luật Việt Nam
             </p>
-            <a-button class="btn btn-info bg-yellow-500 shadow-lg" size="large" >Bắt đầu ngay</a-button>
+            <a-button @click="router.get(route('laws.index'))" class="btn btn-info bg-yellow-500 shadow-lg" size="large" >Bắt đầu ngay</a-button>
         </div>
     </div>
 </template>
