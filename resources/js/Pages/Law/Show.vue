@@ -3,7 +3,7 @@ import {Head, router, usePage} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {reactive, ref, toRaw} from "vue";
 import useState from "ant-design-vue/lib/_util/hooks/useState.js";
-import {EditOutlined} from "@ant-design/icons-vue";
+import { EditOutlined, FileTextOutlined, FilePdfOutlined } from "@ant-design/icons-vue";
 
 const [expandChapters, setExpandChapters] = useState([])
 const [expandArticles, setExpandArticles] = useState([])
@@ -169,6 +169,19 @@ const wrapperCol = {
     },
 };
 
+const downloadFile = (fileName) => {
+    const link = document.createElement('a');
+    link.href = `/documents/download/${fileName}`;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+const loadPdf = (fileName) => {
+    return `/documents/show/${fileName}`;
+}
+
 </script>
 
 <template>
@@ -185,7 +198,7 @@ const wrapperCol = {
                     title="Danh sách luật"
                     @back="() => router.get(route('laws.index'))"
                 />
-                <a-tabs v-model:activeKey="activeKey" size="large">
+                <a-tabs v-model:activeKey="activeKey" size="large" class="h-full">
                     <template #rightExtra>
                         <a-button @click="expandAll" >Mở rộng tất cả</a-button>
                         <a-button class="ml-4" @click="collapseAll" >Thu hẹp tất cả</a-button>
@@ -277,10 +290,23 @@ const wrapperCol = {
                         </a-descriptions>
                     </a-tab-pane>
                     <a-tab-pane key="3" tab="Văn bản gốc">
-
+                        <div class="h-full">
+                            <iframe :src="loadPdf(law.identifier.replace(/\//g, '_') + '.pdf')" class="w-full" style="height: 800px" allow :title="law.identifier" :name="law.name" :allowfullscreen="true"></iframe>
+                        </div>
                     </a-tab-pane>
                     <a-tab-pane key="4" tab="Tải văn bản">
-
+                        <div  class="flex flex-col items-start space-y-4">
+                            <a-button v-if="law.pdf != null" type="primary" size="large"
+                                      @click="downloadFile(law.identifier.replace(/\//g, '_') + '.pdf')">
+                                <file-pdf-outlined class="text-2xl relative -top-1.5" />
+                                <span class="relative -top-1">Tải văn bản PDF</span>
+                            </a-button>
+                            <a-button v-if="law.docx != null" type="primary" size="large"
+                                      @click="downloadFile(law.identifier.replace(/\//g, '_') + '.docx')">
+                                <file-text-outlined class="text-2xl relative -top-1.5" />
+                                <span class="relative -top-1">Tải văn bản DOCX (Word)</span>
+                            </a-button>
+                        </div>
                     </a-tab-pane>
                 </a-tabs>
             </div>
