@@ -49,6 +49,9 @@ class LawController extends Controller
      */
     public function show($identifier)
     {
+        $fileDocx = config('app.path_to_storage') . 'docx\\' . $identifier . '.docx';
+        $filePdf = config('app.path_to_storage') . 'pdf\\' . $identifier . '.pdf';
+
         $identifier = str_replace('_', '/', $identifier);
 
         $law = DB::connection('mongodb')->table('laws')->where('identifier', '=', $identifier)->first();
@@ -63,6 +66,14 @@ class LawController extends Controller
                 $data = DB::connection('mongodb')->table('constitution')->where('identifier', '=', $identifier)->first();
             }
         }
+
+        if(file_exists($fileDocx)) {
+            $data['docx'] = $fileDocx;
+        } else $data['docx'] = null;
+
+        if (file_exists($filePdf)) {
+            $data['pdf'] = $filePdf;
+        } else $data['pdf'] = null;
 
         return Inertia::render('Law/Show', [
            'law' => $data,

@@ -9,13 +9,13 @@
 
         <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-end">
             <Link
-                v-if="$page.props.auth.user"
+                v-if="$page.props.auth.user && role_id === 1"
                 :href="route('dashboard')"
                 class="font-semibold text-gray-600 hover:text-gray-900"
             >Dashboard</Link
             >
 
-            <template v-else>
+            <template v-if="!$page.props.auth.user">
                 <Link
                     :href="route('login')"
                     class="font-semibold text-gray-600 hover:text-gray-900"
@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import {Link, usePage} from '@inertiajs/vue3';
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 
 defineProps({
@@ -45,4 +45,6 @@ defineProps({
         type: Boolean,
     },
 });
+
+const role_id = usePage().props.auth.user?.role_id;
 </script>

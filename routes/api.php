@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CrawlController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +17,15 @@ use App\Http\Controllers\CrawlController;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return response()->json($request->user());
 });
 
 Route::controller(CrawlController::class)->group(function () {
-    Route::get('/crawl/laws', 'crawlDataLaws')->name('crawl.laws');
-    Route::get('/crawl/questions', 'crawlDataQuestions')->name('crawl.questions');
+    Route::get('/crawl/documents/start', 'crawlDocumentsStart')->name('crawl.documents.start');
+    Route::get('/crawl/documents/in_progress', 'crawlDocumentsInProgress')->name('crawl.documents.in_progress');
+    Route::get('/crawl/documents/done', 'crawlDocumentsDone')->name('crawl.documents.done');
+
+    Route::get('/crawl/questions/start', 'crawlQuestionsStart')->name('crawl.questions.start');
+    Route::get('/crawl/questions/in_progress', 'crawlQuestionsInProgress')->name('crawl.questions.in_progress');
+    Route::get('/crawl/questions/done', 'crawlQuestionsDone')->name('crawl.questions.done');
 });

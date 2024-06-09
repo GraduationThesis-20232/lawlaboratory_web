@@ -196,4 +196,6 @@ return [
         '1' =>  'ADMIN',
         '2' =>  'USER',
     ],
+
+    'path_to_storage' => 'E:\Desktop\Java\LawLaboratory\src\main\resources\data\documents\\',
 ];
