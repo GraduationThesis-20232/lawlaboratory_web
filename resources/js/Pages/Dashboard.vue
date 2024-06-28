@@ -17,6 +17,7 @@ const [percentProgressCrawlQuestions, setPercentProgressCrawlQuestions] = useSta
 const [dateNearestQuestionCrawled, setDateNearestQuestionCrawled]= useState('');
 
 const activeKey = ref('1');
+const dateNearestAnswer = usePage().props.nearestDateAnswer;
 
 let countLawsCorpus = [];
 usePage().props.countLawsCorpus.forEach((item) => {
@@ -320,6 +321,34 @@ const inProgressCrawlQuestions = async () => {
         }
     }
 }
+
+const importQuestionsToDatabase = async () => {
+    try {
+        const response = await fetch("http://127.0.0.1:8000/api/import/questions", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        })
+
+        const data = await response.json();
+
+        if (data.status === 'DONE') {
+            notification.success({
+                message: 'Import câu hỏi vào database hoàn tất!',
+                description: 'Hệ thống đã import thành công bộ câu hỏi vào database.',
+            });
+        }
+
+    } catch (error) {
+        notification.error({
+            message: 'Lỗi lấy dữ liệu tiến trình thu thập câu hỏi' ,
+            description: 'Chi tiết lỗi: ' + error,
+        });
+    }
+}
+
 </script>
 
 <template>
@@ -353,6 +382,7 @@ const inProgressCrawlQuestions = async () => {
                         <div class="flex items-center space-x-16">
                             <a-button @click="crawlQuestionsStart" :disabled="disabledButtonCrawlQuestions" type="primary"> Thu thập câu hỏi luật mới </a-button>
                             <a-progress v-if="visibleProgressCrawlQuestions === true" :percent="percentProgressCrawlQuestions" status="active" :size="[200, 15]" style="width: 400px"></a-progress>
+                            <a-button @click="importQuestionsToDatabase" :disabled="dateNearestAnswer === dateNearestQuestionCrawled" type="primary"> Import to database </a-button>
                         </div>
                         <div class="flex items-start justify-between mt-12">
                             <div class="w-1/2">

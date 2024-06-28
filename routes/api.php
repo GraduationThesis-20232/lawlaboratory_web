@@ -28,4 +28,5 @@ Route::controller(CrawlController::class)->group(function () {
     Route::get('/crawl/questions/start', 'crawlQuestionsStart')->name('crawl.questions.start');
     Route::get('/crawl/questions/in_progress', 'crawlQuestionsInProgress')->name('crawl.questions.in_progress');
     Route::get('/crawl/questions/done', 'crawlQuestionsDone')->name('crawl.questions.done');
+    Route::get('/import/questions', 'importQuestionsToDatabase')->name('crawl.questions.import');
 });

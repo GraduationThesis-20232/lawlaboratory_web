@@ -60,4 +60,9 @@ class CrawlController extends Controller
         return response()->json($response->json());
     }
 
+    public function importQuestionsToDatabase()
+    {
+        $response = Http::post('127.0.0.1:8080/import/questions');
+        return response()->json($response->json());
+    }
 }
