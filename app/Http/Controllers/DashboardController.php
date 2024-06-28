@@ -19,7 +19,7 @@ class DashboardController extends Controller
             ['name' => 'Luật', 'count' => $countLaws],
         ];
 
-        $countQuestions = DB::connection('mongodb')->collection('questions_cleaned')
+        $countQuestions = DB::connection('mongodb')->collection('questions')
             ->raw(function ($collection) {
                 return $collection->aggregate([
                     [
@@ -39,9 +39,15 @@ class DashboardController extends Controller
             ];
         }
 
+        $nearestDate = DB::connection('mongodb')->table('questions')
+            ->where('date_answer', '<=', now()->toDateString())
+            ->orderBy('date_answer', 'desc')
+            ->first();
+
         return Inertia::render('Dashboard', [
             'countLawsCorpus' => $countLawsCorpus,
             'countQuestionsCorpus' => $countQuestionsCorpus,
+            'nearestDateAnswer' => $nearestDate['date_answer'],
         ]);
     }
 }
